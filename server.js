@@ -1,12 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolvers');
 require('dotenv').config({path:'variables.env'});
 const Recipe = require("./models/Recipe");
 const User = require("./models/User");
-const bodyParser = require('body-parser');
 
 // const Recipe = require('./models/Recipes');
 // const User = require('./models/User')
@@ -40,8 +41,14 @@ mongoose.set('useCreateIndex')
 
 const app = express();
 
+const corsOptions = {
+    origin : 'http://localhost:3000',
+    credentials:true
+}
+
 app.use(
-    bodyParser.json(),    
+    bodyParser.json(),
+    cors(corsOptions)    
 );
 
 server.applyMiddleware({ app });
