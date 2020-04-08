@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const jwt = require('jsonwebtoken');
 const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolvers');
 require('dotenv').config({path:'variables.env'});
@@ -15,12 +16,13 @@ const User = require("./models/User");
 // Bring in GraphQL-Express 
 // const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
 const { ApolloServer, graphqlExpress } = require('apollo-server-express');
+
 const server = new ApolloServer({ 
     typeDefs, 
     resolvers,
     context: {
         Recipe,
-        User 
+        User
     }
  });
 // const { makeExecutableSchema} = require('graphql-tools');
@@ -47,9 +49,27 @@ const corsOptions = {
 }
 
 app.use(
-    bodyParser.json(),
+    // bodyParser.json(),
     cors(corsOptions)    
 );
+
+
+//Set up JWT authentication
+app.use(async(req,res, next) => {
+    const token = req.headers['authorization'];
+    console.log(token, typeof token);
+    if(token !== "null"){
+        try{
+            const currentUser = await jwt.verify(token, process.env.SECRET )
+            // console.log(currentUser)
+            req.currentUser = currentUser;
+        }catch(err) {
+            console.error(err);
+        }
+    }
+    next(); 
+});
+
 
 server.applyMiddleware({ app });
 

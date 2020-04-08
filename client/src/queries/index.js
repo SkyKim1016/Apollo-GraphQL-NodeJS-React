@@ -19,8 +19,26 @@ export const GET_ALL_RECIPES = gql`
 
 /* Recipes Queries" */
 
-
 /* User Queries" */
+export const GET_CURRENT_USER = gql`
+    query{
+        getCurrentUser{
+            username
+            joinDate
+            email
+        }
+    }
+`
+
+/* User Mutations" */
+
+export const SIGNIN_USER = gql`
+    mutation($username: String!, $password: String! ){
+        signinUser(username: $username, password: $password){
+            token
+        }
+    }
+`;
 
 
 /* Recipes Queries" */
