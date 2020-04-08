@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
+import Signout from '../components/Auth/Signout';
 
-const Navbar = () => (
+
+const Navbar = ({session}) => (
     <nav>
         <NavbarAuth />
     </nav>
 );
 
 
-const NavbarAuth = () => (
+const NavbarAuth = ({session}) => (
+    <Fragment>
     <ul>
         <li>
             <NavLink to="/" exact> Home </NavLink>
@@ -23,11 +26,11 @@ const NavbarAuth = () => (
             <NavLink to="/profile"> Profile</NavLink>
         </li>
         <li>
-            <button>
-                SignOut
-            </button>
+           <Signout />
         </li>
     </ul>
+    <h2>Welcome {session} </h2>
+    </Fragment>
 )
 
 
