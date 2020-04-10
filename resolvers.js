@@ -12,6 +12,11 @@ exports.resolvers = {
             const allRecipes = await Recipe.find();
             return allRecipes;
         },
+        getRecipe: async (root, { _id }, { Recipe }) => {
+            const recipe = await Recipe.findOne({ _id });
+            console.error('============Error===========')
+            return recipe;
+         },
         getCurrentUser: async (root, args, {currentUser, User} ) => { 
             if(!currentUser){
                 return null;

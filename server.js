@@ -22,7 +22,8 @@ const server = new ApolloServer({
     resolvers,
     context: {
         Recipe,
-        User
+        User,
+       
     }
  });
 // const { makeExecutableSchema} = require('graphql-tools');
@@ -57,7 +58,7 @@ app.use(
 //Set up JWT authentication
 app.use(async(req,res, next) => {
     const token = req.headers['authorization'];
-    console.log(token, typeof token);
+    console.log("### Token : "+token, typeof token);
     if(token !== "null"){
         try{
             const currentUser = await jwt.verify(token, process.env.SECRET )

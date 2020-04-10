@@ -25,6 +25,8 @@ type User{
     recipes: [Recipe]!
     users: [User]!
     getAllrecipes:[Recipe]!
+    getRecipe(_id: ID!): Recipe
+    
     getCurrentUser: User
 
   }
