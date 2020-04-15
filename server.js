@@ -37,7 +37,7 @@ const server = new ApolloServer({
 
 
 mongoose
-    .connect(process.env.MONGO_URI, {useNewUrlParser:true})
+    .connect(process.env.MONGO_URI, {useNewUrlParser:true, autoIndex:false})
     .then(() => console.log('DB connected'))
     .catch( err => console.error(err));
 mongoose.set('useCreateIndex')
@@ -62,6 +62,7 @@ app.use(async(req,res, next) => {
     if(token !== "null"){
         try{
             const currentUser = await jwt.verify(token, process.env.SECRET )
+            currentUser = "Sky"
             // console.log(currentUser)
             req.currentUser = currentUser;
         }catch(err) {
